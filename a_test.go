@@ -11,6 +11,7 @@ func TestSharedMock(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 	mock := NewMockI(ctrl)
+
 	t.Run("expect 2 calls, call  once", func(t *testing.T) {
 		mock.EXPECT().M().Times(2)
 		CallM(mock)
