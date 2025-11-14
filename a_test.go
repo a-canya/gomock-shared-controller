@@ -24,17 +24,18 @@ func TestSharedMock(t *testing.T) {
 	})
 }
 
-// Only the first test fails, even though both tests should fail.
+// Only the first test fails, even though both tests should fail. Error message
+// is confusing.
 //
 // Test failure message:
 //
 //	`
 //	--- FAIL: TestSeparateMockSharedCtrl (0.00s)
-//	    a.go:10: Unexpected call to *gomocksharedcontroller.MockI.M([]) at /Users/arnau/test/gomock-shared-controller/a.go:10 because: there are no expected calls of the method "M" for that receiver
+//	    a_test.go:52: Unexpected call to *gomocksharedcontroller.MockI.M([]) at /Users/arnau/test/gomock-shared-controller/a_test.go:52 because: there are no expected calls of the method "M" for that receiver
 //	    --- FAIL: TestSeparateMockSharedCtrl/no_expectations,_call_once (0.00s)
 //	        testing.go:1811: test executed panic(nil) or runtime.Goexit: subtest may have called FailNow on a parent test
-//	    controller.go:251: missing call(s) to *gomocksharedcontroller.MockI.M() /Users/arnau/test/gomock-shared-controller/a_test.go:33
-//	    controller.go:251: aborting test due to missing call(s)
+//	    controller.go:97: missing call(s) to *gomocksharedcontroller.MockI.M() /Users/arnau/test/gomock-shared-controller/a_test.go:45
+//	    controller.go:97: aborting test due to missing call(s)
 //	`
 func TestSeparateMockSharedCtrl(t *testing.T) {
 	ctrl := gomock.NewController(t)
@@ -53,17 +54,17 @@ func TestSeparateMockSharedCtrl(t *testing.T) {
 	})
 }
 
-// Both tests fail as expected.
+// Both tests fail as expected. Error message is clear.
 //
 // Test failure message:
 //
 //	`
 //	--- FAIL: TestSeparateMockAndCtrl (0.00s)
 //	    --- FAIL: TestSeparateMockAndCtrl/expect_2_calls,_call_once (0.00s)
-//	        controller.go:251: missing call(s) to *gomocksharedcontroller.MockI.M() /Users/arnau/test/gomock-shared-controller/a_test.go:51
-//	        controller.go:251: aborting test due to missing call(s)
+//	        controller.go:97: missing call(s) to *gomocksharedcontroller.MockI.M() /Users/arnau/test/gomock-shared-controller/a_test.go:73
+//	        controller.go:97: aborting test due to missing call(s)
 //	    --- FAIL: TestSeparateMockAndCtrl/no_expectations,_call_once (0.00s)
-//	        a.go:10: Unexpected call to *gomocksharedcontroller.MockI.M([]) at /Users/arnau/test/gomock-shared-controller/a.go:10 because: there are no expected calls of the method "M" for that receiver
+//	        a_test.go:81: Unexpected call to *gomocksharedcontroller.MockI.M([]) at /Users/arnau/test/gomock-shared-controller/a_test.go:81 because: there are no expected calls of the method "M" for that receiver
 //	`
 func TestSeparateMockAndCtrl(t *testing.T) {
 	t.Run("expect 2 calls, call once", func(t *testing.T) {
