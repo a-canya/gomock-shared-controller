@@ -9,7 +9,6 @@ import (
 // this test passes even though it seems the individual tests should not
 func TestSharedMock(t *testing.T) {
 	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
 	mock := NewMockI(ctrl)
 
 	t.Run("expect 2 calls, call  once", func(t *testing.T) {
@@ -25,7 +24,6 @@ func TestSharedMock(t *testing.T) {
 // only first test fails, even though both tests should
 func TestSeparateMockSharedCtrl(t *testing.T) {
 	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
 
 	t.Run("expect 2 calls, call once", func(t *testing.T) {
 		mock := NewMockI(ctrl)
@@ -45,7 +43,6 @@ func TestSeparateMockSharedCtrl(t *testing.T) {
 func TestSeparateMockAndCtrl(t *testing.T) {
 	t.Run("expect 2 calls, call once", func(t *testing.T) {
 		ctrl := gomock.NewController(t)
-		defer ctrl.Finish()
 		mock := NewMockI(ctrl)
 
 		mock.EXPECT().M().Times(2)
@@ -54,7 +51,6 @@ func TestSeparateMockAndCtrl(t *testing.T) {
 
 	t.Run("no expectations, call once", func(t *testing.T) {
 		ctrl := gomock.NewController(t)
-		defer ctrl.Finish()
 		mock := NewMockI(ctrl)
 
 		CallM(mock)
